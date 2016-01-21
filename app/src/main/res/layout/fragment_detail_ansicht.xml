@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="de.dampfblaskasten.android.superwetter.DetailAnsichtFragment"
+    tools:showIn="@layout/activity_detail_ansicht"
+    tools:ignore="MergeRootFrame">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Max Temp:"
+        android:id="@+id/tfmax"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/imgVorschau"
+        android:layout_alignStart="@+id/imgVorschau"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Min Temp:"
+        android:id="@+id/tfmin"
+        android:layout_alignTop="@+id/tfmax"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="25dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imgVorschau"
+        android:layout_below="@+id/tfDatum"
+        android:layout_alignRight="@+id/tfStatus"
+        android:layout_alignEnd="@+id/tfStatus"
+        android:layout_marginRight="56dp"
+        android:layout_marginEnd="56dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kirchheim unter Teck"
+        android:id="@+id/tfLocation"
+        android:textSize="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Datum"
+        android:id="@+id/tfDatum"
+        android:layout_below="@+id/tfLocation"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="35dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:id="@+id/tfStatus"
+        android:textSize="20dp"
+        android:layout_below="@+id/imgVorschau"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

@@ -1,5 +1,8 @@
 package de.dampfblaskasten.android.superwetter;
 
+
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -35,7 +39,7 @@ import java.util.List;
 public class VorhersageFragment extends Fragment {
 
     public ArrayAdapter<String> adapter;
-
+    private Context context;
     public VorhersageFragment() {
     }
 
@@ -43,6 +47,8 @@ public class VorhersageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        HolWetterData hwd = new HolWetterData();
+        hwd.execute("2890473");
     }
 
     @Override
@@ -70,11 +76,8 @@ public class VorhersageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
       List<String> bspData = new ArrayList();
-        bspData.add("Morgen- NochKälter - -5");
-        bspData.add("23.1- Kalt - -3");
-        bspData.add("24.1- Schnee - 2");
-        bspData.add("25.1- Kalt - -3");
-        bspData.add("26.1- Sonnig - 5");
+        bspData.add("Bitte warten es wird aktualisiert");
+
 
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, bspData);
 
@@ -83,13 +86,22 @@ public class VorhersageFragment extends Fragment {
         ListView lw = (ListView) rootView.findViewById(R.id.listview_forecast);
         lw.setAdapter(adapter);
 
+        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String forecast = adapter.getItem(position);
+                Context context = getActivity().getApplicationContext();
+                Intent detailIntent = new Intent(context, DetailAnsicht.class).putExtra(Intent.EXTRA_TEXT,forecast);
+                startActivity(detailIntent);
+            }
+        });
         return rootView;
     }
 
 
     public class HolWetterData extends AsyncTask<String, Void, String[]> {
 
-        private final String LOG_TAG = HolWetterData.class.getSimpleName();
+
 
 
         @Override
@@ -137,7 +149,7 @@ public class VorhersageFragment extends Fragment {
                         .build();
 
                 URL url = new URL(builtUri.toString());
-                Log.v(LOG_TAG, "Built URI " + builtUri.toString());
+
 
 
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -164,7 +176,6 @@ public class VorhersageFragment extends Fragment {
                     forecastJsonStr = null;
                 }
                 forecastJsonStr = buffer.toString();
-                System.out.println(forecastJsonStr);
             } catch (IOException e) {
                 Log.e("VorhersageFragment", "Error ", e);
 
@@ -183,13 +194,13 @@ public class VorhersageFragment extends Fragment {
             }
 
 
-            String[] strarr = new String[7];
+            String[] wetterdatenfürListe = new String[7];
             try {
-                strarr = getWeatherDataFromJson(forecastJsonStr, 7);
+                wetterdatenfürListe = getWeatherDataFromJson(forecastJsonStr, 7);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            return strarr;
+            return wetterdatenfürListe;
         }
 
 
@@ -251,6 +262,7 @@ public class VorhersageFragment extends Fragment {
             return resultStrs;
 
         }
+
 
         private String getReadableDateString(long time) {
 
